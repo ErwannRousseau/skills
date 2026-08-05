@@ -1,0 +1,4 @@
+interface:
+  display_name: "Write Like Me"
+  short_description: "Ma voix orale, technique et légère"
+  default_prompt: "Utilise $write-like-me pour écrire ou reformuler ce texte dans ma voix."
