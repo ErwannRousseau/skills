@@ -65,6 +65,10 @@ Partir du problème ou de la motivation, montrer rapidement un exemple concret, 
 
 Donner le résultat dès la première phrase. Garder la sortie facile à scanner et traiter le message comme une seule idée.
 
+### Option de style
+
+Activer le flag `--dm` uniquement quand l'utilisateur le demande, surtout pour un message privé court. Alléger la ponctuation au jugé, sans la supprimer mécaniquement : garder les points pour séparer les idées, les virgules pour les pauses naturelles ou les listes, et les autres signes quand ils clarifient réellement le message. Retirer surtout la ponctuation décorative ou trop formelle pour obtenir un texte qui ressemble à un message tapé à la main. Écrire en minuscules par défaut, y compris en début de phrase quand la lecture reste claire, mais garder les majuscules utiles aux noms propres, aux sigles et à la compréhension. Garder les apostrophes et contractions naturelles, les marqueurs et la structure des listes à puces, ainsi que la ponctuation indispensable aux URLs, au code, aux nombres ou à la compréhension. Ne pas activer ce mode pour un article, un email professionnel, une documentation ou un sujet sensible sans demande explicite.
+
 Terminer cette étape quand une opération et un cadre ont été appliqués, que chaque passage porte une idée utile et que les références exigées ont été suivies.
 
 ## 4. Retravailler les mots
@@ -78,6 +82,7 @@ Terminer cette étape quand une opération et un cadre ont été appliqués, que
 - En français, employer un oral maîtrisé : `on va`, `voilà`, `petit`, `sympa` ou `attaquons-nous à` seulement quand la phrase les appelle.
 - En anglais, employer les contractions et des transitions parlées comme `let's`, `here's`, `first things first` ou `and that's it` quand elles tombent juste. Adapter les images au lieu de traduire une expression française mot à mot.
 - Quand le registre technique est chargé, appliquer toutes ses formes exactes.
+- Bannir le caractère `—` dans la sortie. Le remplacer par une ponctuation naturelle ou une nouvelle phrase.
 - Ajouter au moins un petit sourire par texte. Pour un article, garder une présence légère tout au long du texte et une ou deux formulations vraiment mémorables. Accrocher chaque touche à l'idée voisine.
 
 Terminer cette étape quand les mots renforcent les idées reconstruites, que le texte se lit naturellement à voix haute et que le sourire respecte la température.
@@ -99,6 +104,8 @@ Relire une fois comme si le lecteur était assis à côté. Le texte est prêt s
 - l'opération, le cadre et les références exigées ont tous été appliqués;
 - la fin avance au lieu de répéter l'introduction;
 - la version anglaise ou française sonne écrite dans cette langue.
+- le caractère `—` n'apparaît nulle part dans la sortie.
+- si le flag `--dm` est actif, la ponctuation et les majuscules ont été allégées avec discernement sans rendre le message ambigu et la structure des listes à puces est intacte.
 
 Si une reformulation suit encore l'ordre et la syntaxe des phrases sources avec surtout des synonymes, revenir à l'étape 2. Pour un article, faire de même quand le résultat conserve à la fois la même suite de sections et une correspondance paragraphe par paragraphe, sauf si l'utilisateur a demandé de préserver la structure. Une phrase déjà juste peut rester intacte; le reste doit être reconstruit quand cela apporte un gain réel.
 
