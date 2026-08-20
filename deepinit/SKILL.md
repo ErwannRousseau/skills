@@ -2,7 +2,6 @@
 name: deepinit
 description:
   Deep-map a repository and create or improve its AGENTS.md knowledge hierarchy.
-disable-model-invocation: true
 ---
 
 # deepinit
