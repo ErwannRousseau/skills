@@ -27,10 +27,10 @@ focused path:
 
 ## Scope
 
-Mutating modes write only `AGENTS.md` files. The `audit` mode writes nothing;
-any separate Markdown files in its report are proposed placement, not edits.
-Treat source code, tests, configuration, existing docs, Git history, issues/PRs,
-and connected repository context as evidence.
+Mutating modes write only `AGENTS.md` files. `audit` applies clear, evidence-
+backed fixes directly; it reports unresolved or normative choices instead of
+silently deciding them. Treat source code, tests, configuration, existing docs,
+Git history, issues/PRs, and connected repository context as evidence.
 
 Keep generated or vendored material at its boundary unless project-specific
 behavior there needs guidance.
@@ -58,12 +58,9 @@ maintenance.
 
 ### Audit
 
-Inspect the merged hierarchy, contradictions, root essentials, disclosed
-references, stale or redundant guidance, and deletion candidates. Produce a
-report with evidence and proposed placement; keep `AGENTS.md` files unchanged.
-Read
-[the progressive-disclosure audit prompt](references/progressive-disclosure-audit.md)
-for this mode.
+Audit the hierarchy and apply unambiguous, evidence-backed `AGENTS.md` fixes.
+Ask before resolving a normative contradiction. Read
+[the progressive-disclosure audit prompt](references/progressive-disclosure-audit.md).
 
 ### Nested scope
 
@@ -109,7 +106,9 @@ Write only the local delta for the child scope; parent guidance is inherited.
 Prefer stable responsibilities, concepts, and boundaries over brittle path
 catalogs.
 
-Use exact paths when they are stable, non-obvious, and genuinely useful.
+Use a repository-relative path only as an actionable breadcrumb: pair it with
+the invariant to preserve and the change that needs it. Omit paths that merely
+locate ordinary code, list a directory, or restate the current tree.
 
 ### Every line earns its context cost
 
@@ -119,6 +118,17 @@ Before retaining a line, ask:
 
 Remove generic advice, no-ops, duplication, stale detail, vague rules, and
 trivially discoverable facts with no added value.
+
+### Source is not guidance
+
+Never paraphrase nearby source, configuration, or tests into `AGENTS.md`. If an
+agent can recover the exact behavior cheaply from the relevant scope, omit it;
+do not create a local `AGENTS.md` whose only value is a prose copy of code.
+
+A contract or invariant earns guidance only when its durable decision, rationale,
+owner, or required cross-boundary action is not apparent from that source and
+would otherwise be easy to break. State that non-obvious constraint, not the
+currently visible mechanics.
 
 ### Sub-agents discover; the parent decides
 
@@ -305,7 +315,7 @@ only evidence-backed headings and omit empty sections.
 #### WHERE TO LOOK
 
 Prefer capabilities and responsibilities over brittle path lists. Use exact
-paths when they are useful.
+paths only as actionable breadcrumbs for a non-obvious change.
 
 Add a conditional pointer when detailed guidance lives elsewhere.
 
@@ -315,7 +325,10 @@ and keep the pointer at the scope that first needs it.
 #### ANTI-PATTERNS
 
 Include project-specific approaches that are known to be wrong, dangerous, or
-contrary to the repository's intended architecture.
+contrary to the repository's intended architecture. Omit this heading unless the
+repository proves a concrete local trap, consequence, and safe route that a
+competent agent cannot infer from the code or configuration. Omit generic
+prohibitions, restatements of the current structure, and ordinary hygiene.
 
 #### NOTES
 
@@ -339,6 +352,12 @@ Verify that:
 - rationale is not invented;
 - explicit normative guidance is preserved or changed with user confirmation;
 - each child contains a real local delta;
+- no `AGENTS.md` merely paraphrases source, configuration, or tests that agents
+  can inspect cheaply;
+- each `ANTI-PATTERNS` entry names an evidenced local trap; absent entries are
+  omitted;
+- each `ARCHITECTURE` path is an actionable breadcrumb for an invariant, not a
+  structural description;
 - root contains only repository-wide guidance;
 - no file exists merely because a directory is large;
 - every disclosed target exists and every pointer names its trigger;

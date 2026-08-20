@@ -1,7 +1,7 @@
 # Progressive-disclosure audit
 
-Use this reference when `deepinit audit` is requested. It is a review prompt,
-not an instruction to edit files.
+Use this reference when `deepinit audit` is requested. It is a review prompt
+that applies unambiguous `AGENTS.md` fixes directly.
 
 ```text
 I want you to refactor my AGENTS.md file to follow progressive disclosure
@@ -38,4 +38,5 @@ Follow these steps:
 
 During the audit, preserve repository evidence and distinguish descriptive
 claims from normative instructions. Ask for a decision before changing a
-normative contradiction. Report proposed file placement separately from edits.
+normative contradiction. Apply unambiguous fixes directly and report proposed
+file placement separately from edits.
