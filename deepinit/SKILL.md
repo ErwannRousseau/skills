@@ -1,32 +1,45 @@
 ---
 name: deepinit
-description:
-  Deep-map a repository and create or improve its AGENTS.md knowledge hierarchy.
+description: Map a repository and structure its AGENTS.md guidance.
+disable-model-invocation: true
 ---
 
 # deepinit
 
 Deeply understand the repository, then create or improve the **smallest useful
-hierarchy of ****`AGENTS.md`**** files** for future coding agents.
+hierarchy of `AGENTS.md` files** for future coding agents.
 
 The goal is not comprehensive documentation. Preserve only **non-obvious project
 knowledge that materially changes how an agent should work**.
 
 **Deep investigation, sparse documentation.**
 
+## Usage
+
+Use `/deepinit` for the default upsert path. Add a mode when the task needs a
+focused path:
+
+```text
+/deepinit rebuild
+/deepinit audit
+/deepinit nested scope <path>
+```
+
 ## Scope
 
-Modify **only ****`AGENTS.md`**** files**.
+Mutating modes write only `AGENTS.md` files. The `audit` mode writes nothing;
+any separate Markdown files in its report are proposed placement, not edits.
+Treat source code, tests, configuration, existing docs, Git history, issues/PRs,
+and connected repository context as evidence.
 
-Use source code, tests, configuration, existing docs, Git history, issues/PRs,
-and connected repository context as evidence when useful, but do not modify
-them.
+Keep generated or vendored material at its boundary unless project-specific
+behavior there needs guidance.
 
 ## Modes
 
-### Update — default
+### Upsert — default
 
-Audit the existing hierarchy first. Preserve useful human guidance, but freely:
+Audit the existing hierarchy first. Preserve useful human guidance while:
 
 - correct strongly evidenced stale factual claims;
 - remove generic, duplicated, obvious, or obsolete guidance;
@@ -36,9 +49,28 @@ Audit the existing hierarchy first. Preserve useful human guidance, but freely:
 ### Rebuild
 
 When explicitly requested, read all existing `AGENTS.md` files as evidence, then
-reconstruct the hierarchy from the repository model.
+reconstruct the hierarchy from a fresh repository model. Use it when the current
+hierarchy is incoherent, obsolete, duplicated, or missing important boundaries.
+It may move or remove `AGENTS.md` files while preserving useful human intent.
 
-Rebuild does not discard useful human intent.
+Rebuild is not the routine path; default upsert is safer for incremental
+maintenance.
+
+### Audit
+
+Inspect the merged hierarchy, contradictions, root essentials, disclosed
+references, stale or redundant guidance, and deletion candidates. Produce a
+report with evidence and proposed placement; keep `AGENTS.md` files unchanged.
+Read
+[the progressive-disclosure audit prompt](references/progressive-disclosure-audit.md)
+for this mode.
+
+### Nested scope
+
+Limit reconnaissance and investigation to the requested domain plus the parent
+guidance it inherits. Record the local-versus-parent decision and the proposed
+delta before writing. Use it for a package, app, or technical boundary such as
+`nested scope packages/api`; it does not rebuild unrelated repository scopes.
 
 ## Principles
 
@@ -46,9 +78,9 @@ Rebuild does not discard useful human intent.
 
 Every project-specific claim written to `AGENTS.md` needs repository evidence.
 
-Infer patterns only when multiple signals make them credible. Do not invent
-rationale. If a boundary is clear but its reason is not, document the boundary
-without guessing why.
+Infer patterns when multiple signals make them credible. Keep rationale
+evidence-bound; when a boundary is clear but its reason is not, document the
+boundary without a reason.
 
 Use Git history or connected issue/PR context only to resolve ambiguity,
 establish durable rationale, or verify staleness.
@@ -70,8 +102,7 @@ A tiny critical domain may deserve one. A huge conventional directory may not.
 
 Nested files inherit parent guidance.
 
-Do not repeat parent content. A child contains only the local delta for its
-scope.
+Write only the local delta for the child scope; parent guidance is inherited.
 
 ### Capability-first, path-second
 
@@ -121,11 +152,13 @@ Identify as applicable:
 - existing `AGENTS.md` hierarchy;
 - existing docs or skills already carrying detailed guidance.
 
-Use the best inspection tools available in the current environment. Do not bind
-the workflow to one harness, tool family, or agent API.
+Use the best inspection tools available in the current environment. Keep the
+workflow independent of any one harness, tool family, or agent API.
 
 **Done when:** the major knowledge boundaries are clear enough to partition
-deeper investigation.
+deeper investigation, and the map records project purpose, package/workspace
+tooling, non-standard build/typecheck commands, runtime boundaries, existing
+`AGENTS.md` files, and disclosed guidance sources.
 
 ### 2. Parallel investigation
 
@@ -144,25 +177,34 @@ Each investigation should return:
 - ambiguities or contradictions;
 - whether local `AGENTS.md` guidance appears warranted.
 
+**Done when:** every applicable investigation axis has returned findings,
+evidence, placement input, and unresolved questions, or is explicitly marked not
+applicable.
+
 ### 3. Reconcile
 
 Aggregate findings into one repository model.
 
-When sub-agents conflict, inspect the evidence and resolve the contradiction
-yourself.
+Resolve descriptive conflicts from evidence. When normative instructions
+conflict and the choice changes behavior, pause and ask the user which version
+to keep before writing either one.
 
 Distinguish:
 
 - **descriptive claims** — correct them when strong evidence shows they are
   stale;
 - **normative instructions** — preserve explicit human intent unless clearly
-  superseded; report unresolved contradictions instead of silently inventing
-  policy.
+  superseded; record the user's choice for any unresolved conflict.
 
-Observed repetition alone is not proof of an intended convention.
+Treat repeated observations as candidates; promote them to conventions only when
+evidence supports intent.
 
-Understand generated or vendored code at its boundary, then exclude it from deep
-investigation unless project-specific behavior there must be preserved.
+Understand generated or vendored code at its boundary, then keep deep
+investigation focused on project-owned behavior.
+
+**Done when:** every finding has a status—accepted evidence, stale claim,
+explicit human instruction, user-resolved conflict, or unresolved question—and
+the repository model contains no silently chosen normative policy.
 
 ### 4. Coverage pass
 
@@ -196,10 +238,28 @@ Prioritize:
 - dangerous local anti-patterns;
 - recurring gotchas.
 
+Treat package manifests, configuration, scripts, directory layout, and `--help`
+output as sources of truth. Document the unwritten convention, durable reason,
+gotcha, or expensive lookup that the environment cannot provide cheaply.
+
 Usually omit full trees, exhaustive file lists, generic framework advice,
-obvious scripts, standard behavior, and facts easy to recover just-in-time.
+standard behavior, and facts easy to recover just-in-time.
+
+Keep these root essentials when evidenced:
+
+- one-sentence project purpose;
+- the package manager when it is not npm, including workspace usage;
+- non-standard build or typecheck commands;
+- instructions relevant to every task in the repository.
+
+Keep language-, package-, and domain-specific detail in nested `AGENTS.md` files
+or existing reference docs, reached through a conditional pointer.
 
 **Investigation depth does not determine documentation length.**
+
+**Done when:** every candidate line has a retain, remove, or disclose decision,
+with evidence or explicit human intent, and root content contains only the root
+essentials plus repository-wide guidance.
 
 ### 6. Place
 
@@ -210,48 +270,47 @@ Root contains only repository-wide guidance.
 Create a nested `AGENTS.md` only when local context materially differs from the
 parent.
 
-Use existing docs or skills for progressive disclosure when useful, but do not
-create or modify those external files.
+Use existing docs or skills for progressive disclosure. When no suitable
+reference exists, use a nested `AGENTS.md` at the domain boundary.
+
+Each pointer names its subject and its trigger, for example: “For TypeScript
+changes, see `docs/TYPESCRIPT.md`.” Keep one pointer per distinct branch.
 
 For every significant domain considered, decide consciously:
 
 - local `AGENTS.md` warranted; or
 - parent guidance sufficient.
 
+**Done when:** every significant domain has an explicit parent/local/disclosed
+decision, every disclosed target exists, and every pointer has a clear trigger.
+
 ### 7. Write
 
-Use the following structure as the **default for each ****`AGENTS.md`** and
-actively look for useful project-specific information for each section:
+Use the following headings as a vocabulary for each `AGENTS.md`. They are
+optional: include a section only when evidence supports useful content.
 
 ```md
 # <scope>
 
 <one-sentence purpose>
 
-## WHERE TO LOOK
-
-## ARCHITECTURE
-
-## CONVENTIONS
-
-## INVARIANTS
-
-## ANTI-PATTERNS
-
-## VALIDATION
-
-## NOTES
+<only evidence-backed sections relevant to this scope>
 ```
 
-Include these sections whenever useful information for them can be established
-from the repository. Omit a section only when the investigation found nothing
-meaningful to put there; never invent or pad content just to satisfy the
-structure.
+Root files start with purpose and essentials; domain files contain only their
+local delta. Available headings: `WHERE TO LOOK`, `DISCLOSURE`, `ARCHITECTURE`,
+`CONVENTIONS`, `INVARIANTS`, `ANTI-PATTERNS`, `VALIDATION`, and `NOTES`. Choose
+only evidence-backed headings and omit empty sections.
 
 #### WHERE TO LOOK
 
 Prefer capabilities and responsibilities over brittle path lists. Use exact
 paths when they are useful.
+
+Add a conditional pointer when detailed guidance lives elsewhere.
+
+Use a Markdown link for each disclosed file. Put the condition before the link,
+and keep the pointer at the scope that first needs it.
 
 #### ANTI-PATTERNS
 
@@ -262,6 +321,10 @@ contrary to the repository's intended architecture.
 
 Include important gotchas, context, or project-specific knowledge that does not
 fit naturally in another section.
+
+**Done when:** every selected file contains only accepted, scoped guidance; root
+essentials are present when evidenced; conditional pointers resolve; and the
+resulting hierarchy is ready for the review gates below.
 
 ## Review gates
 
@@ -274,15 +337,19 @@ Verify that:
 - parent/child duplication is gone;
 - inferred conventions have enough evidence;
 - rationale is not invented;
-- explicit normative guidance was not silently overturned;
+- explicit normative guidance is preserved or changed with user confirmation;
 - each child contains a real local delta;
 - root contains only repository-wide guidance;
 - no file exists merely because a directory is large;
-- referenced files actually exist;
-- only `AGENTS.md` files were modified.
+- every disclosed target exists and every pointer names its trigger;
+- root essentials are present when evidenced;
+- the diff contains only `AGENTS.md` paths.
 
-Prefer the **shortest ****`AGENTS.md`**** that preserves all high-value guidance
-for its scope**. There are no target line counts.
+Prefer the **shortest `AGENTS.md` that preserves all high-value guidance for its
+scope**. There are no target line counts.
+
+**Done when:** the merged hierarchy passes every gate above and no unresolved
+normative conflict remains unconfirmed by the user.
 
 ## Final report
 
@@ -292,7 +359,7 @@ Finish with a compact recap:
 deepinit complete
 
 Mode
-- update | rebuild
+- default | rebuild | audit | nested scope
 
 Investigated
 - major boundaries/domains examined
@@ -311,5 +378,5 @@ Unresolved
 - genuine ambiguities that could not be established from evidence
 ```
 
-Do not report file counts, line counts, or agent counts as quality metrics.
-Report coverage and documentation decisions.
+Report coverage and documentation decisions. Use file, line, and agent counts
+only as operational details, never as quality metrics.
