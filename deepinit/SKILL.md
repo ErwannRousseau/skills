@@ -22,7 +22,7 @@ focused path:
 ```text
 /deepinit rebuild
 /deepinit audit
-/deepinit nested scope <path>
+/deepinit scope <path>
 ```
 
 ## Scope
@@ -62,12 +62,12 @@ Audit the hierarchy and apply unambiguous, evidence-backed `AGENTS.md` fixes.
 Ask before resolving a normative contradiction. Read
 [the progressive-disclosure audit prompt](references/progressive-disclosure-audit.md).
 
-### Nested scope
+### Scope
 
 Limit reconnaissance and investigation to the requested domain plus the parent
 guidance it inherits. Record the local-versus-parent decision and the proposed
 delta before writing. Use it for a package, app, or technical boundary such as
-`nested scope packages/api`; it does not rebuild unrelated repository scopes.
+`scope packages/api`; it does not rebuild unrelated repository scopes.
 
 ## Principles
 
@@ -378,7 +378,7 @@ Finish with a compact recap:
 deepinit complete
 
 Mode
-- default | rebuild | audit | nested scope
+- default | rebuild | audit | scope
 
 Investigated
 - major boundaries/domains examined
