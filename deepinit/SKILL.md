@@ -27,13 +27,18 @@ focused path:
 
 ## Scope
 
-Mutating modes write only `AGENTS.md` files. `audit` applies clear, evidence-
-backed fixes directly; it reports unresolved or normative choices instead of
-silently deciding them. Treat source code, tests, configuration, existing docs,
-Git history, issues/PRs, and connected repository context as evidence.
+Write only `AGENTS.md` files in mutating modes.
 
-Keep generated or vendored material at its boundary unless project-specific
-behavior there needs guidance.
+Apply clear, evidence-backed fixes in `audit` mode.
+
+Report unresolved and normative choices in `audit` mode. Do not decide them
+silently.
+
+Treat source code, tests, configuration, existing docs, Git history, issues,
+PRs, and connected repository context as evidence.
+
+Keep generated and vendored material at its boundary. Add guidance only for
+project-specific behavior inside that boundary.
 
 ## Modes
 
@@ -48,10 +53,14 @@ Audit the existing hierarchy first. Preserve useful human guidance while:
 
 ### Rebuild
 
-When explicitly requested, read all existing `AGENTS.md` files as evidence, then
-reconstruct the hierarchy from a fresh repository model. Use it when the current
-hierarchy is incoherent, obsolete, duplicated, or missing important boundaries.
-It may move or remove `AGENTS.md` files while preserving useful human intent.
+Read every existing `AGENTS.md` file before a rebuild.
+
+Reconstruct the hierarchy from a fresh repository model.
+
+Use rebuild only for an incoherent, obsolete, duplicated, or incomplete
+hierarchy.
+
+Preserve useful human intent when moving or removing `AGENTS.md` files.
 
 Rebuild is not the routine path; default upsert is safer for incremental
 maintenance.
@@ -64,51 +73,58 @@ Ask before resolving a normative contradiction. Read
 
 ### Scope
 
-Limit reconnaissance and investigation to the requested domain plus the parent
-guidance it inherits. Record the local-versus-parent decision and the proposed
-delta before writing. Use it for a package, app, or technical boundary such as
-`scope packages/api`; it does not rebuild unrelated repository scopes.
+Inspect only the requested domain and its inherited parent guidance.
+
+Record the local-versus-parent decision before writing.
+
+Record the proposed local delta before writing.
+
+Use scope mode for a package, app, or technical boundary such as
+`scope packages/api`. Do not rebuild unrelated scopes.
 
 ## Principles
 
 ### Evidence over assumptions
 
-Every project-specific claim written to `AGENTS.md` needs repository evidence.
+Back every project-specific `AGENTS.md` claim with repository evidence.
 
-Infer patterns when multiple signals make them credible. Keep rationale
-evidence-bound; when a boundary is clear but its reason is not, document the
-boundary without a reason.
+Infer a pattern only from multiple credible signals.
 
-Use Git history or connected issue/PR context only to resolve ambiguity,
+Keep rationale evidence-bound.
+
+State a proven boundary without inventing its rationale.
+
+Use Git history and connected issue/PR context only to resolve ambiguity,
 establish durable rationale, or verify staleness.
 
 ### Knowledge boundaries over filesystem boundaries
 
-Place `AGENTS.md` where **working context changes**, not where directory size
-changes.
+Place `AGENTS.md` where **working context changes**. Do not use directory size
+as a placement criterion.
 
-A local file is warranted when a scope has materially distinct architecture,
-conventions, invariants, validation rules, gotchas, anti-patterns, or
-technology-specific guidance.
+Create a local file only for materially distinct architecture, conventions,
+invariants, validation rules, gotchas, anti-patterns, or technology guidance.
 
-A tiny critical domain may deserve one. A huge conventional directory may not.
+Create a file for a tiny critical domain when its knowledge differs. Do not
+create one for a huge conventional directory.
 
 **Complexity triggers investigation, not documentation.**
 
 ### Child is a delta from parent
 
-Nested files inherit parent guidance.
+Inherit parent guidance in nested files.
 
-Write only the local delta for the child scope; parent guidance is inherited.
+Write only the local delta in a child file.
 
 ### Capability-first, path-second
 
-Prefer stable responsibilities, concepts, and boundaries over brittle path
-catalogs.
+Name stable responsibilities, concepts, and boundaries. Do not create brittle
+path catalogs.
 
-Use a repository-relative path only as an actionable breadcrumb: pair it with
-the invariant to preserve and the change that needs it. Omit paths that merely
-locate ordinary code, list a directory, or restate the current tree.
+Pair every repository-relative path with its invariant and required change.
+
+Omit paths that only locate ordinary code, list a directory, or restate the
+current tree.
 
 ### Every line earns its context cost
 
@@ -117,33 +133,50 @@ Before retaining a line, ask:
 > Would a future coding agent plausibly behave worse without this?
 
 Remove generic advice, no-ops, duplication, stale detail, vague rules, and
-trivially discoverable facts with no added value.
+trivially discoverable facts.
+
+### Write rules as atomic instructions
+
+Write each guidance rule as one imperative, testable instruction.
+
+- Give each rule one responsibility.
+- Name its subject explicitly.
+- State prohibited actions clearly when risk requires one.
+- Omit rationale unless it changes the decision.
 
 ### Source is not guidance
 
-Never paraphrase nearby source, configuration, or tests into `AGENTS.md`. If an
-agent can recover the exact behavior cheaply from the relevant scope, omit it;
-do not create a local `AGENTS.md` whose only value is a prose copy of code.
+Do not paraphrase nearby source, configuration, or tests in `AGENTS.md`.
 
-A contract or invariant earns guidance only when its durable decision, rationale,
-owner, or required cross-boundary action is not apparent from that source and
-would otherwise be easy to break. State that non-obvious constraint, not the
-currently visible mechanics.
+Omit behavior that an agent can recover cheaply from the relevant scope.
+
+Do not create a local `AGENTS.md` that merely copies code in prose.
+
+Document a contract or invariant only when its durable decision, rationale,
+owner, or required cross-boundary action is non-obvious and easy to break.
+
+State the non-obvious constraint. Do not restate visible mechanics.
 
 ### Sub-agents discover; the parent decides
 
-Run independent investigation axes as **parallel sub-agents** so assumptions and
-local context from one axis do not pollute another.
+Run independent investigation axes as **parallel sub-agents**.
 
-Partition by the repository's actual needs, not a fixed agent template. Give
-each sub-agent a distinct question or domain and only the context needed for it.
+Keep each sub-agent's assumptions and local context isolated.
 
-Scale the number and scope of sub-agents to the repository. Parallelism is for
-**context isolation and independent evidence gathering**, not for satisfying a
-fixed agent count.
+Partition sub-agents by repository need. Do not use a fixed agent template.
 
-Sub-agents return evidence and findings. The parent owns reconciliation,
-placement, wording, and final decisions.
+Give each sub-agent one distinct question or domain.
+
+Give each sub-agent only the context it needs.
+
+Scale sub-agent count and scope to the repository.
+
+Use parallelism for **context isolation and independent evidence gathering**.
+Do not use it to satisfy a fixed agent count.
+
+Require sub-agents to return evidence and findings.
+
+Keep reconciliation, placement, wording, and final decisions with the parent.
 
 ## Workflow
 
@@ -162,8 +195,9 @@ Identify as applicable:
 - existing `AGENTS.md` hierarchy;
 - existing docs or skills already carrying detailed guidance.
 
-Use the best inspection tools available in the current environment. Keep the
-workflow independent of any one harness, tool family, or agent API.
+Use the best inspection tools available in the current environment.
+
+Keep the workflow independent of any one harness, tool family, or agent API.
 
 **Done when:** the major knowledge boundaries are clear enough to partition
 deeper investigation, and the map records project purpose, package/workspace
@@ -175,9 +209,8 @@ tooling, non-standard build/typecheck commands, runtime boundaries, existing
 Spawn parallel sub-agents across the independent domains or questions discovered
 during reconnaissance.
 
-Useful axes may include architecture, packages/apps, data,
-auth/security-sensitive areas, validation, build/deployment, or project-specific
-conventions.
+Investigate applicable architecture, packages/apps, data, auth/security areas,
+validation, build/deployment, and project conventions.
 
 Each investigation should return:
 
@@ -195,9 +228,11 @@ applicable.
 
 Aggregate findings into one repository model.
 
-Resolve descriptive conflicts from evidence. When normative instructions
-conflict and the choice changes behavior, pause and ask the user which version
-to keep before writing either one.
+Resolve descriptive conflicts from evidence.
+
+Pause on a normative conflict that changes behavior.
+
+Ask the user which normative instruction to keep before writing either one.
 
 Distinguish:
 
@@ -206,11 +241,13 @@ Distinguish:
 - **normative instructions** — preserve explicit human intent unless clearly
   superseded; record the user's choice for any unresolved conflict.
 
-Treat repeated observations as candidates; promote them to conventions only when
-evidence supports intent.
+Treat repeated observations as candidates.
 
-Understand generated or vendored code at its boundary, then keep deep
-investigation focused on project-owned behavior.
+Promote a candidate to a convention only when evidence supports intent.
+
+Understand generated and vendored code at its boundary.
+
+Keep deep investigation focused on project-owned behavior.
 
 **Done when:** every finding has a status—accepted evidence, stale claim,
 explicit human instruction, user-resolved conflict, or unresolved question—and
@@ -249,11 +286,13 @@ Prioritize:
 - recurring gotchas.
 
 Treat package manifests, configuration, scripts, directory layout, and `--help`
-output as sources of truth. Document the unwritten convention, durable reason,
-gotcha, or expensive lookup that the environment cannot provide cheaply.
+output as sources of truth.
 
-Usually omit full trees, exhaustive file lists, generic framework advice,
-standard behavior, and facts easy to recover just-in-time.
+Document an unwritten convention, durable reason, gotcha, or expensive lookup
+only when the environment cannot provide it cheaply.
+
+Omit full trees, exhaustive file lists, generic framework advice, standard
+behavior, and facts easy to recover just-in-time.
 
 Keep these root essentials when evidenced:
 
@@ -262,8 +301,10 @@ Keep these root essentials when evidenced:
 - non-standard build or typecheck commands;
 - instructions relevant to every task in the repository.
 
-Keep language-, package-, and domain-specific detail in nested `AGENTS.md` files
-or existing reference docs, reached through a conditional pointer.
+Put language-, package-, and domain-specific detail in nested `AGENTS.md` files
+or existing reference docs.
+
+Reach existing reference docs through a conditional pointer.
 
 **Investigation depth does not determine documentation length.**
 
@@ -275,16 +316,20 @@ essentials plus repository-wide guidance.
 
 Create the hierarchy from **knowledge scope**.
 
-Root contains only repository-wide guidance.
+Put only repository-wide guidance in root files.
 
-Create a nested `AGENTS.md` only when local context materially differs from the
-parent.
+Create a nested `AGENTS.md` only when local context materially differs from
+its parent.
 
-Use existing docs or skills for progressive disclosure. When no suitable
-reference exists, use a nested `AGENTS.md` at the domain boundary.
+Use existing docs or skills for progressive disclosure.
 
-Each pointer names its subject and its trigger, for example: “For TypeScript
-changes, see `docs/TYPESCRIPT.md`.” Keep one pointer per distinct branch.
+Create a nested `AGENTS.md` at the domain boundary only when no suitable
+reference exists.
+
+Name the subject and trigger in every pointer, for example: “For TypeScript
+changes, see `docs/TYPESCRIPT.md`.”
+
+Keep one pointer per distinct branch.
 
 For every significant domain considered, decide consciously:
 
@@ -296,8 +341,9 @@ decision, every disclosed target exists, and every pointer has a clear trigger.
 
 ### 7. Write
 
-Use the following headings as a vocabulary for each `AGENTS.md`. They are
-optional: include a section only when evidence supports useful content.
+Use these headings as optional `AGENTS.md` vocabulary.
+
+Include a heading only when evidence supports useful scoped content.
 
 ```md
 # <scope>
@@ -307,33 +353,70 @@ optional: include a section only when evidence supports useful content.
 <only evidence-backed sections relevant to this scope>
 ```
 
-Root files start with purpose and essentials; domain files contain only their
-local delta. Available headings: `WHERE TO LOOK`, `DISCLOSURE`, `ARCHITECTURE`,
-`CONVENTIONS`, `INVARIANTS`, `ANTI-PATTERNS`, `VALIDATION`, and `NOTES`. Choose
-only evidence-backed headings and omit empty sections.
+Start root files with purpose and repository-wide essentials.
+
+Write only the local delta in domain files.
+
+Use only evidence-backed headings: `WHERE TO LOOK`, `DISCLOSURE`,
+`ARCHITECTURE`, `CONVENTIONS`, `INVARIANTS`, `ANTI-PATTERNS`, `VALIDATION`, and
+`NOTES`.
+
+Omit empty headings.
+
+Write each guidance rule as a standalone bullet.
+
+Give each bullet one subject, one responsibility, and one testable action.
+
+State prohibited actions explicitly when risk requires one.
+
+Keep purpose and scope descriptions readable. Do not turn them into artificial
+rules.
+
+Use this shape:
+
+```md
+- The <subject> <imperative action>.
+- Do not <risky action>.
+```
+
+#### INVARIANTS
+
+Use this heading only for multiple durable, high-consequence constraints.
+
+Put each isolated rule in its owning heading: `ARCHITECTURE`, `CONVENTIONS`, or
+`ANTI-PATTERNS`.
+
+Omit `INVARIANTS` when it would be a template label rather than useful guidance.
 
 #### WHERE TO LOOK
 
-Prefer capabilities and responsibilities over brittle path lists. Use exact
-paths only as actionable breadcrumbs for a non-obvious change.
+Name a capability or responsibility before a path.
+
+Add a path only as an actionable breadcrumb for a non-obvious change.
 
 Add a conditional pointer when detailed guidance lives elsewhere.
 
-Use a Markdown link for each disclosed file. Put the condition before the link,
-and keep the pointer at the scope that first needs it.
+Use a code-formatted repository-relative path for every disclosed file, such as
+`docs/TYPESCRIPT.md`. Do not use Markdown links.
+
+Put the trigger before the path.
+
+Place the pointer at the first scope that needs it.
 
 #### ANTI-PATTERNS
 
-Include project-specific approaches that are known to be wrong, dangerous, or
-contrary to the repository's intended architecture. Omit this heading unless the
-repository proves a concrete local trap, consequence, and safe route that a
-competent agent cannot infer from the code or configuration. Omit generic
-prohibitions, restatements of the current structure, and ordinary hygiene.
+Name each project-specific approach that is wrong, dangerous, or contrary to
+the intended architecture.
+
+Include this heading only when evidence proves a local trap, its consequence,
+and its safe route.
+
+Omit generic prohibitions, structural restatements, and ordinary hygiene.
 
 #### NOTES
 
-Include important gotchas, context, or project-specific knowledge that does not
-fit naturally in another section.
+Put important project-specific gotchas or context here only when no other
+heading owns them.
 
 **Done when:** every selected file contains only accepted, scoped guidance; root
 essentials are present when evidenced; conditional pointers resolve; and the
@@ -356,6 +439,8 @@ Verify that:
   can inspect cheaply;
 - each `ANTI-PATTERNS` entry names an evidenced local trap; absent entries are
   omitted;
+- each `INVARIANTS` heading contains multiple durable, high-consequence
+  constraints; isolated rules use their owning heading instead;
 - each `ARCHITECTURE` path is an actionable breadcrumb for an invariant, not a
   structural description;
 - root contains only repository-wide guidance;

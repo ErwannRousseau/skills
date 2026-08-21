@@ -25,7 +25,7 @@ Follow these steps:
 
 4. **Create the file structure**: Output:
 
-   - A minimal root AGENTS.md with markdown links to the separate files
+   - A minimal root AGENTS.md with code-formatted paths to the separate files
    - Each separate file with its relevant instructions
    - A suggested docs/ folder structure
 
