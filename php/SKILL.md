@@ -66,10 +66,25 @@ identified.
 - Type parameters, properties, and return values. Keep `mixed`, untyped arrays,
   and dynamic shapes at integration boundaries, then normalize them into typed
   objects or documented arrays.
+- When property hooks are available, use them when a property remains the API
+  but reads or writes need normalization, validation, or a computed value. Keep
+  hooks small and side-effect-light; use methods for multi-step domain actions.
+  Verify ORM, hydrator, serializer, proxy, and static-analysis support before
+  migrating a model.
 - Prefer enums for closed sets, value objects for domain invariants, and `final`
   or `readonly` when immutability is intentional.
+- When asymmetric visibility is available, use `public protected(set)` or
+  `public private(set)` for read-public, write-restricted state. Properties must
+  be typed and non-static, and `set` visibility cannot be wider than `get`.
+  Unlike `readonly`, asymmetric visibility permits controlled internal mutation.
+- When available, use `RoundingMode` with an explicit `round()` mode for
+  financial or precision-sensitive calculations; test tie cases and negative
+  values.
 - Use dependency injection for I/O and time; avoid hard-coded mail, filesystem,
   or network clients inside domain logic.
+- For Unix timestamps, use `DateTimeImmutable::createFromTimestamp()` when the
+  runtime floor provides it, including fractional seconds. Set the intended
+  timezone explicitly and test range and precision boundaries.
 - Use named arguments only with APIs whose parameter names are part of a stable
   contract.
 - Avoid dynamic properties. Use `never` only for code paths that always throw or
@@ -89,6 +104,9 @@ their configuration instead of bypassing them.
 - Escape for the output context: HTML, URL, and JavaScript each require
   different handling. For HTML text or attributes, use
   `htmlspecialchars($value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8')`.
+- For Unicode-aware text, use `mb_trim()`, `mb_ltrim()`, `mb_rtrim()`,
+  `mb_ucfirst()`, and `mb_lcfirst()` when `mbstring` is available; normalization
+  does not replace context-specific output escaping.
 - Hash passwords with `password_hash()` and verify with `password_verify()`.
   Rehash after `password_needs_rehash()` succeeds.
 - Generate tokens with `random_bytes()` or `random_int()`, and compare secrets
@@ -129,6 +147,9 @@ final class RuleViolationException extends \DomainException {}
 - At a raw process or HTTP boundary, catch `Throwable` to log safe context and
   return a generic response. In a framework, use its exception handler or
   middleware instead of adding a second global handler.
+- When the project floor supports it, mark application APIs with
+  `#[\Deprecated(message: ..., since: ...)]` when deprecating them, and keep an
+  `E_USER_DEPRECATED` check in migration or CI tests.
 - Never swallow an exception or return success after a failed side effect.
 - Use `finally` for resource cleanup.
 
@@ -142,8 +163,12 @@ propagated with context, or deliberately reported as an unresolved risk.
 - Check return values from filesystem and network operations, and surface
   failures with useful context.
 - Use `finally` to close resources and clean up temporary state.
-- Choose the clearest iteration; `array_map()` is not automatically faster than
-  a loop.
+- Choose the clearest iteration. When available, use `array_find()`,
+  `array_find_key()`, `array_any()`, and `array_all()` for direct short-circuit
+  searches and predicates. Their callbacks receive the value and key; because
+  `array_find()` returns `null` when it finds nothing, use `array_find_key()` or
+  `array_any()` when a matching value may be null. `array_map()` is not
+  automatically faster than a loop.
 - Stream large files with a generator and always close resources:
 
 ```php
@@ -209,7 +234,11 @@ behavior change.
 
 - Prefer the smallest change that preserves the project's existing architecture.
 - Measure before optimizing; profile I/O, memory, and CPU hotspots instead of
-  guessing.
+  guessing. Treat lazy objects as an advanced optimization: prefer framework or
+  library support, and use `ReflectionClass::newLazyGhost()` or
+  `ReflectionClass::newLazyProxy()` only when measured initialization cost
+  justifies them and lifecycle tests cover cloning, serialization, destruction,
+  and failure paths.
 - Let framework and project documentation own HTTP, ORM, session, and
   framework-testing conventions. Keep this skill focused on PHP language,
   runtime, security, dependency, and verification behavior.
