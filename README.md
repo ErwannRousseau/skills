@@ -22,4 +22,5 @@ npx skills add ErwannRousseau/skills --skill write-like-me
 - `create-write-like-me`
 - `flight-search`
 - `php`
+- `thought`
 - `write-like-me`
