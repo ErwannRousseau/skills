@@ -1,0 +1,7 @@
+interface:
+  display_name: "Flight Search"
+  short_description: "Compare flights with dates, flexibility, and budget"
+  default_prompt: "Use $flight-search to compare flights with trvl and octotrip-flights."
+
+policy:
+  allow_implicit_invocation: true

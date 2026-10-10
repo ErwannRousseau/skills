@@ -20,5 +20,6 @@ npx skills add ErwannRousseau/skills --skill write-like-me
 
 - `backend-architecture-patterns`
 - `create-write-like-me`
+- `flight-search`
 - `php`
 - `write-like-me`
