@@ -5,3 +5,4 @@
 *.pem
 *.key
 id_rsa*
+__pycache__/
